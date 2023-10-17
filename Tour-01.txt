@@ -23,7 +23,7 @@
         Ao declarar desta forma não é necessário indicar o tipo e isto pode ser feito tanto no package,
         quanto na func.
     := :
-        Este símbolo representão uma atribuição curta isso significa que é possível dentro de uma função fazer
+        Este símbolo representa uma atribuição curta isso significa que é possível dentro de uma função fazer
         esta declaração rápida de variável no lugar do var.
         Exemplo:
             k := 3
