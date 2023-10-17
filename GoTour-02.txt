@@ -1,0 +1,63 @@
+1. For (Only loop in go)
+    for var init:= int; Operation; post {}
+    init e post: São opcionais.
+        Exemplo:
+            for ; sum < 1000; {
+            		sum += sum
+            	}
+2. While:
+    Na realidade este loop não existe exatamente em Go, o que ocorre é uma adaptação da mesma.
+    Exemplo:
+        sum := 0
+        for sum < 100 {sum++}
+3. Infinity loop:
+    for {}
+4. If:
+    Assim como as outras instruções o Go aboliu os parentêses, sendo necessário apenas {}
+    Exemplo:
+        if x <= 1 {}
+
+    4.1 Short statement:
+        O if tem a permissão de criar variaveis em seu escopo tornando assim, mais simples para certas condições
+        Exemplo:
+            if v := math.Pow(1, 5); v < 8 { return v}
+            else { aqui dentro o escopo de if ainda é válido e portanto v pode ser utilizado}
+5. Printf:
+    %g: Float.
+6. Switch:
+    Em go o switch não precisa de break e não precisam ser inteiros.
+    Sintaxe:
+    switch os := runtime.GOOS; os {
+    	case "darwin":
+    		fmt.Println("OS X.")
+    	case "linux":
+    		fmt.Println("Linux.")
+    	default:
+    		fmt.Printf("%s.\n", os)
+    	}
+    6.1 switch true:
+        Essa solução se baseia em nenhuma condição, na realidade é utilizado para deixar o código melhor otimizado
+        sem if e else gigantesco.
+        Exemplo :
+        switch {
+        case t.Hour() < 12:
+            fmt.Println("Good morning!")
+        case t.Hour() < 17:
+            fmt.Println("Good afternoon.")
+        default:
+            fmt.Println("Good evening.")
+        }
+7. Defer:
+    Essa função exerce um atraso de retorno, ela é executada porém seu valor só é mostrado após um retorno de outra
+    função:
+    Exemplo:
+        defer fmt.Println("world")
+
+        fmt.Println("hello")
+    Está função permite por em stack a sua ordem de excuções por exemplo podemos fazer uma chamada descrescente,
+    somente com essa função.
+
+    Exemplo:
+        for i := 0; i < 10; i++ {
+        		defer fmt.Println(i)
+        	}
