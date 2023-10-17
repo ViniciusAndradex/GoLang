@@ -1,0 +1,72 @@
+1. Chamamos as funções a partir do último nome na importação 'math/rand' -> Chamaremos a partir do rand.
+2. Funções:
+    func nome(var, var int ...) return type {} -> Nas variáveis (var) temos que indicar o tipo.
+    2.1: Os retornos podem ser mais de um.
+        (string, number)
+3. := ícone para recebe.
+4. Retorno limpo:
+    Leva esse nome pois não retorna "nada", o que acontece é quando utilizamos as variáveis de retorno podemos
+    simplemente dar um return e o valor retornado da função será os valores que foram operados.
+
+    Instruções de retorno limpas devem ser usadas apenas em funções curtas, como no exemplo mostrado aqui.
+    Elas podem prejudicar a legibilidade em funções mais longas
+5. var:
+    declaração de váriavel = var nome tipo
+    e pode ser declarada no pacote ou função.
+    Exemplo:
+        Package:
+            var c, python, java bool
+        Func:
+            var i int
+    Inicializar var:
+        var c, python = true, "lindo!"
+        Ao declarar desta forma não é necessário indicar o tipo e isto pode ser feito tanto no package,
+        quanto na func.
+    := :
+        Este símbolo representão uma atribuição curta isso significa que é possível dentro de uma função fazer
+        esta declaração rápida de variável no lugar do var.
+        Exemplo:
+            k := 3
+
+6. Tipos Primitivos:
+    bool
+
+    string
+
+    int  int8  int16  int32  int64
+    uint uint8 uint16 uint32 uint64 uintptr // Unsigned
+
+    byte // pseudônimo para uint8
+
+    rune // pseudônimo para int32
+         // representa um ponto de código Unicode
+
+    float32 float64
+
+    complex64 complex128
+
+    Obs: O tipo int, uint e uintptr terão tamanho máximo de acordo com o seu sistema x32 ou x64
+
+    6.1 Valores padrões:
+        0 para tipos numéricos,
+        false para tipos boleanos, e
+        "" (string vazia) para strings.
+
+7. Formatadores de texto:
+    %v : int, float, bool
+    %q: string
+
+8. Conversão de Tipos:
+    tipo(var/valor)
+    Exemplo:
+        var x, y int = 3, 4
+        var f float64 = math.Sqrt(float64(x*x + y*y))
+
+    8.1 Valores não especificados:
+        Tratando números, o tipo da variável irá depender da quantidade de digitos, pois ao não especificarmos
+        o go faz a "contagem" e verifica qual tipo faz mais sentido.
+9. Constantes:
+    const Nome = valor
+    A const atua nos mesmo padrões das conversões e se não especificadas o go faz a interpretação do seu tipo.
+    Uma constante deve começar com uma letra maiúscula.
+    A const não pode receber do formato declaração rápida.
