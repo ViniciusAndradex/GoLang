@@ -1,0 +1,160 @@
+1. Ponteiro
+    i. É possível criar uma váriavel de ponteiro nil, e apartir dessa variável capturar endereços de memória:
+        var p *int
+    ii. Também podemos capturar esse valor de variáveis já existentes, se e somente se, uma variável de
+        ponteiro
+        tiver sido criada.
+        i := 42
+        p = &i
+            a. *p: Consegue agora definir o valor de i , pois o mesmo está direcionando para o mesmo endereço
+                   de i.
+                *p = 21
+2. Format strings:
+        d - decimal integer
+        o - octal integer
+        O - octal integer with 0o prefix
+        b - binary integer
+        x - hexadecimal integer lowercase
+        X - hexadecimal integer uppercase
+        f - decimal floating point, lowercase
+        F - decimal floating point, uppercase
+        e - scientific notation (mantissa/exponent), lowercase
+        E - scientific notation (mantissa/exponent), uppercase
+        g - the shortest representation of %e or %f
+        G - the shortest representation of %E or %F
+        c - a character represented by the corresponding Unicode code point
+        q - a quoted character
+        U - Unicode escape sequence
+        t - the word true or false
+        s - a string
+        v - default format
+        #v - Go-syntax representation of the value
+        T - a Go-syntax representation of the type of the value
+        p - pointer address
+        % - a double %% prints a single %
+3. Structs:
+     Structs assume o papel de classes na linguagem e portanto operações OOP são feitas através dela,
+     com as determinadas modificações, a principal diferença são a Herança que não existe em Go, o que
+     existe na realidade é uma composição.
+     Definição: São coleções de campos.
+
+    3.1 Declaração:
+        type Vertex struct {
+        	X int
+        	Y int
+        }
+    3.2 Entendendo:
+        X e Y são os campos do Vertex, o acesso a essa váriveis após a instância é padrão como as outras,
+        utlizamos o dot '.'.
+        x := Vertex{4, 5}
+        x.X
+    3.3 Pointer e Struct:
+        É possível capturar o endereço da struct e portanto ter acesso aos campos e métodos da mesma, a
+        diferença é que visualmente não precisamos do (*) para ter acesso ao valor já que teriamos que fazer
+        '*p.X', os criadores nos polpam dessa notação, utlize de forma direta.
+
+        Exemplo:
+            v := Vertex{1, 2}
+            v1 := Vertex{X: 1} -> Os outros campos recebem os valores padrões da linguagem
+            p := &v
+            p.X = 1e9 -> ⁹
+4. Arrays
+    Arrays quando definidos não podem ser redimensionados em Go.
+    Declaração:
+        Literal:
+            var a [10]int
+        Non Literal:
+            q := []int{2,3,5,4,7}
+            [arquivo slice-literals]
+        a[0] = xzczx
+
+        primes := [6]int{1,2,3,4,5,6} -> Declaração rápida.
+    4.1 Slices:
+        É possível criar dinâmicamente um array, seja definindo diversos valores para ele na declaração
+        seja fazendo slice de um existente
+        Exemplo:
+            primes := [6]int{2, 3, 5, 7, 11, 13}
+
+            var s []int = primes[1:4]
+            s = s[:2]
+            s = s[1:]
+            s = s[:]
+            Importante: O primeiro valor é adicionado e último não.
+            Observação: Quando os elementos são alterados no slice também alteram a array original.
+
+            4.1.1 Length and Capacity:
+                Length: Número de elementos que o slice contém
+                Capacity: Número de elementos da matriz subjascente (Matriz que está sendo cortada).
+                Para fazer a verificação utilize a função:
+                    len(slice), cap(slice)
+                Valor padrão: nil
+        4.2 make:
+            Uma função built-in do go que permite a criação de arrays dinâmicamente, com ela é possível
+            criar com o length já registrado com os valores padrões da linguagem e com a capacidade.
+            Exemplo:
+            	g := make([]int, 2, 5) -> 1º tipo de array, 2º Length, 3º Capacity
+        4.3 Matriz:
+            Também podemos gerar matrizes, bastando para isso aumentar 1 no número de colchetes
+            Exemplo:
+                x := [][]string{
+                    // Temos que indicar aqui dentro o array que irá representar a posição.
+                    []string{linha}, _0_
+                    []string{linha}, _0_
+                    []string{linha}, _2_
+                }
+                _0_: somente demonstração do valor do index.
+                append(slice, elements...): Função built-in, caso o slice tenha um tamanho menor do que a
+                    quantidade desejada para alocamento, um novo endereço é fornecido.
+        4.4 range
+            Podemos fazer a iteração dos valores do array com a função range, para isso precisamos de duas
+            variáveis, uma para capturar o index e outra para capturar o valor.
+            Exemplo:
+                var array []int{1,2,3}
+                for index, value := range aray {
+                    ...
+                }
+                for _, v := range array {
+                    fmt.Printf("value: %d=\n", v)
+                }
+                for i, _ := range array {
+                    fmt.Printf("index: %d\n", i)
+                }
+                for i := range array {
+                    fmt.Printf("index: %d\n", i)
+                }
+                OBS: Com esse valor '_' podemos omtir os valores que iriamos receber , ou seja, a linguagem
+                compreende que é uma variável mas somente como um "Ghost" não utilizavel
+5. map
+    Função que consegue mapear chaves para os valores, o valor padrão é nil, esse map nil não possui chaves
+    e nem podemos adicionar. Utilizamos normalmente o make para inicializar um map tendo em vista que com ele
+    podemos iniciar com os valores padrões de determinado tipo primário, os maps funcionam como um dicionário.
+    Exemplo:
+        var name map[type_values]type_var -> []: indica os tipos de elementos que poderemos mapear no map
+        (nome da key), type_var: Representa os dados que estaram dentro do map.
+
+        var name map[type_values]type_var{podemos instanciar direto.}
+
+    5.1 Operations:
+        m := make(map[string]int)
+        m["Test"] = 42 -> Insert
+        m["Test"] = 45 -> Update
+        elem = m["Test"] -> Retrieve element (get)
+        delete((m, key) -> Delete
+        v, y := m["Test"] -> Depackage if key with two values
+6. Functions Values:
+    Funçoẽs também podem receber funções como parametro o que torna mais amplo o seu uso.
+    Exemplo:
+        func compute(fn func(float64, float64) float64) float64 {
+        	return fn(3, 4)
+        }
+7. Closures:
+    É um valor da função que faz referências a variáveis fora de seu escopo, funciona parecido com o wrapper e
+    Exemplo:
+        func adder() func(int) int { -> func tem seu corpo próprio
+        	sum := 0 -> Escopo de adder
+        	return func(x int) int { -> os valores passados para a função na realidade são
+        	    para func(), que por sua vez pode acessar o escopo de adder.
+        		sum += x
+        		return sum
+        	}
+        }
